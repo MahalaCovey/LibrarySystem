@@ -1,6 +1,6 @@
 // Mahala Covey
 // CIS 1202 800
-// March 28, 2024
+// March 29, 2024
 
 // Driver for the Publication class.
 #include <iostream>
@@ -18,10 +18,11 @@ int getMenuChoice();
 
 int main()
 {
-	const int SIZE = 1000; // Maximum array capacity
+	const int SIZE = 50; // Maximum array capacity
 	Publication publicationData[SIZE]; // Array of Publication objects
 	int count = 0; // Holds count of Publication objects in file
 	int choiceMade; // User's menu choice
+	string searchTitle; // Title user wants to search for
 
 	// Call getPublications
 	getPublications(publicationData, count);
@@ -38,15 +39,57 @@ int main()
 			break;
 
 		case 2: // Display publication titles
+			showTitles(publicationData, count);
 			break;
 
 		case 3: // Find a publication
+			cin.ignore(); // Ignore newline character
+			cout << "Publication name? "; // Prompt for title
+			getline(cin, searchTitle);
+			if (findPublication(publicationData, count, searchTitle) != -1)
+			{
+				publicationData[findPublication(publicationData, count, searchTitle)].displayInfo(); // Call displayInfo
+				cout << endl;
+			}
+			else
+			{
+				cout << searchTitle << " was not found." << endl;
+			}
 			break;
 
 		case 4: // Check out
+			cin.ignore(); // Ignore newline character
+			cout << "Publication name? "; // Prompt for title
+			getline(cin, searchTitle);
+			if (findPublication(publicationData, count, searchTitle) != -1)
+			{
+				if (publicationData[findPublication(publicationData, count, searchTitle)].getStock() > 0)
+				{
+					publicationData[findPublication(publicationData, count, searchTitle)].checkOut(); // Call checkOut
+				}
+				else
+				{
+					cout << "There are no copies of " << searchTitle << " to check out." << endl;
+				}
+			}
+			else
+			{
+				cout << searchTitle << " was not found." << endl;
+			}
 			break;
 
 		case 5: // Check in
+			cin.ignore(); // Ignore newline character
+			cout << "Publication name? "; // Prompt for title
+			getline(cin, searchTitle);
+			if (findPublication(publicationData, count, searchTitle) != -1)
+			{
+				publicationData[findPublication(publicationData, count, searchTitle)].checkIn(); // Call checkIn
+			}
+			else
+			{
+				cout << searchTitle << " was not found." << endl;
+			}
 			break;
 		}
 	} while (choiceMade != 6);
@@ -132,14 +175,26 @@ void showPublications(Publication list[], int count)
 	}
 }
 
-void showTitles(Publication[], int)
+void showTitles(Publication list[], int count)
 {
-
+	for (int i = 0; i < count; i++)
+	{
+		cout << list[i].getTitle();
+		cout << endl;
+	}
 }
 
-int findPublication(Publication[], int, string)
+int findPublication(Publication list[], int count, string search)
 {
-	return 0;
+	for (int i = 0; i < count; i++)
+	{
+		if (list[i].getTitle() == search)
+		{
+			return i; // Returns position if match found
+		}
+	}
+
+	return -1; // Returns sentinal if match not found
 }
 
 //***************************************************************************************
