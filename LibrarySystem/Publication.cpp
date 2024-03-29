@@ -30,7 +30,7 @@ void Publication::displayInfo()
 	cout << title << endl;
 	cout << publisher << endl;
 	cout << "$ " << price << endl;
-	cout << price << endl;
+	cout << year << endl;
 	switch (type)
 	{
 	case BOOK: cout << "Book";

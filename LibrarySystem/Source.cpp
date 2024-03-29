@@ -26,6 +26,8 @@ int main()
 	// Call getPublications
 	getPublications(publicationData, count);
 
+	cout << "Count is " << count << endl;
+
 	// Handle menu choice
 	do
 	{
@@ -106,20 +108,23 @@ void getPublications(Publication list[], int& i)
 	// If file is successfully opened, load data into array
 	if (file)
 	{
-		while (file >> pTitle /* >> pPublisher >> pPrice >> pYear >> iType >> pStock*/)
+		getline(file, pTitle);
+		getline(file, pPublisher);
+		while (file >> pPrice >> pYear >> iType >> pStock)
 		{
-			cout << "In the while loop";
-			cout << "Read made: " << pTitle << /*", " << pPublisher << ", " << pPrice << ", " << pYear << ", " << iType << ", " << pStock << endl; // Debug */
-			// pType = static_cast<PublicationType>(iType - 1); // Cast int to PublicationType for type member
-			// list[i].storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
+			pType = static_cast<PublicationType>(iType); // Cast int to PublicationType for type member
+			list[i].storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
+
+			getline(file, pTitle);
+			getline(file, pPublisher);
+
 			i++;
 		}
+		// Close file
+		file.close();
 	}
 	else
 		cout << "Error opening the file..." << endl;
-
-	// Close file
-	file.close();
 }
 
 void showPublications(Publication list[], int count)
@@ -127,6 +132,7 @@ void showPublications(Publication list[], int count)
 	for (int i = 0; i < count; i++)
 	{
 		list[i].displayInfo();
+		cout << endl;
 	}
 }
 
