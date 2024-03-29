@@ -18,15 +18,13 @@ int getMenuChoice();
 
 int main()
 {
-	const int SIZE = 50; // Maximum array capacity
+	const int SIZE = 1000; // Maximum array capacity
 	Publication publicationData[SIZE]; // Array of Publication objects
 	int count = 0; // Holds count of Publication objects in file
 	int choiceMade; // User's menu choice
 
 	// Call getPublications
 	getPublications(publicationData, count);
-
-	cout << "Count is " << count << endl;
 
 	// Handle menu choice
 	do
@@ -107,18 +105,16 @@ void getPublications(Publication list[], int& i)
 
 	// If file is successfully opened, load data into array
 	if (file)
-	{
-		getline(file, pTitle);
-		getline(file, pPublisher);
-		while (file >> pPrice >> pYear >> iType >> pStock)
+	{	
+		while (getline(file, pTitle))
 		{
+			getline(file, pPublisher);
+			file >> pPrice >> pYear >> iType >> pStock; 
 			pType = static_cast<PublicationType>(iType); // Cast int to PublicationType for type member
 			list[i].storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
-
-			getline(file, pTitle);
-			getline(file, pPublisher);
-
 			i++;
+
+			file.ignore(4, '\n'); // Skip newline characters in file
 		}
 		// Close file
 		file.close();
