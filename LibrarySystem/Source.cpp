@@ -34,6 +34,7 @@ int main()
 		switch (choiceMade)
 		{
 		case 1: // Display all publications
+			showPublications(publicationData, count);
 			break;
 
 		case 2: // Display publication titles
@@ -87,33 +88,46 @@ void getPublicationInfo(Publication& p)
 	p.storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
 }
 
-void getPublications(Publication list[], int&)
+void getPublications(Publication list[], int& i)
 {
-	string contents; // Holds file contents... temp?
 	fstream file; // File stream object
+	// Variables to hold Publication members
+	string pTitle;
+	string pPublisher;
+	float pPrice;
+	int pYear;
+	int iType; // To hold int type that will be assigned PublicationType pType
+	PublicationType pType; 
+	int pStock;
 
 	// Open file in input/reading mode
-	file.open("11inventory.txt", ios::in); 
+	file.open("11publications.txt", ios::in);
 
 	// If file is successfully opened, load data into array
 	if (file)
 	{
-		while (file >> contents)
+		while (file >> pTitle /* >> pPublisher >> pPrice >> pYear >> iType >> pStock*/)
 		{
-			cout << contents;
+			cout << "In the while loop";
+			cout << "Read made: " << pTitle << /*", " << pPublisher << ", " << pPrice << ", " << pYear << ", " << iType << ", " << pStock << endl; // Debug */
+			// pType = static_cast<PublicationType>(iType - 1); // Cast int to PublicationType for type member
+			// list[i].storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
+			i++;
 		}
 	}
 	else
-		cout << "Error opening the file." << endl << endl;
+		cout << "Error opening the file..." << endl;
 
 	// Close file
 	file.close();
-
 }
 
-void showPublications(Publication[], int)
+void showPublications(Publication list[], int count)
 {
-
+	for (int i = 0; i < count; i++)
+	{
+		list[i].displayInfo();
+	}
 }
 
 void showTitles(Publication[], int)
