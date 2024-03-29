@@ -131,6 +131,11 @@ void getPublicationInfo(Publication& p)
 	p.storePublication(pTitle, pPublisher, pPrice, pYear, pType, pStock);
 }
 
+//***********************************************************************************************************************************************
+// getPublications reads from the 11publications.txt file. A call to the function storePublications stores the file contents in an array	    *
+// of Publication objects, list. The number of Publication objects in the array are passed by reference to an int i for use in other functions. *
+//***********************************************************************************************************************************************
+
 void getPublications(Publication list[], int& i)
 {
 	fstream file; // File stream object
@@ -166,6 +171,11 @@ void getPublications(Publication list[], int& i)
 		cout << "Error opening the file..." << endl;
 }
 
+//**********************************************************************************************************************************************************
+// showPublications loops through the array of Publication objects list with an int count. displayInfo is called in the loop to display the values of each *
+// Publication object in the array.																														   *
+//**********************************************************************************************************************************************************
+
 void showPublications(Publication list[], int count)
 {
 	for (int i = 0; i < count; i++)
@@ -175,6 +185,11 @@ void showPublications(Publication list[], int count)
 	}
 }
 
+//***************************************************************************************************************************************************
+// showTitles loops through the array of Publication objects list with an int count. displayInfo is called in the loop to display the title of each *
+// Publication object in the array.																													*
+//***************************************************************************************************************************************************
+
 void showTitles(Publication list[], int count)
 {
 	for (int i = 0; i < count; i++)
@@ -183,6 +198,11 @@ void showTitles(Publication list[], int count)
 		cout << endl;
 	}
 }
+
+//******************************************************************************************************************************************************
+// findPublication loops through the array of Publication objects list with an int count. A string search is used to determine if a match is found in  *
+// the title member of Publication objects in the array. If a match is found, the index of the match is returned. A sentinal -1 is returned otherwise. *			
+//******************************************************************************************************************************************************
 
 int findPublication(Publication list[], int count, string search)
 {
